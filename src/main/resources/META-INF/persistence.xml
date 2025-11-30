@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+    <persistence-unit name="gestionHotelPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <properties>
+            <!-- Connexion MySQL (XAMPP) -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gestion_hotel?useSSL=false&amp;serverTimezone=UTC"/>
+            <property name="jakarta.persistence.jdbc.user" value="hotel_user"/>
+            <property name="jakarta.persistence.jdbc.password" value="Hotel@2025"/>
+
+            <!-- Hibernate options -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <!-- On ne touche pas au schéma : il est déjà créé par ton script SQL -->
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+        </properties>
+    </persistence-unit>
+</persistence>
