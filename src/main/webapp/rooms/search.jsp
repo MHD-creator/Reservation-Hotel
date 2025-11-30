@@ -56,7 +56,7 @@
                         <h5 class="card-title">Chambre <%= c.getNumero() %></h5>
                         <p class="card-text text-muted mb-1"><%= c.getType() %> • <%= c.getCapacite() %> pers.</p>
                         <p class="card-text fw-bold mb-2">
-                            <%= c.getPrixNuit() != null ? c.getPrixNuit().toPlainString() : "-" %> € / nuit
+                            <%= c.getPrixNuit() != null ? c.getPrixNuit().toPlainString() : "-" %> FCFA / nuit
                         </p>
                         <p class="card-text small text-muted">
                             <%= c.getDescription() != null ? c.getDescription() : "" %>

@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="form-label">Prix / nuit (€)</label>
+                        <label class="form-label">Prix / nuit (FCFA)</label>
                         <input type="number" step="0.01" min="0" name="prixNuit" class="form-control" required value="<%= chambre != null && chambre.getPrixNuit() != null ? chambre.getPrixNuit().toPlainString() : "" %>">
                     </div>
                 <hr class="my-4">
