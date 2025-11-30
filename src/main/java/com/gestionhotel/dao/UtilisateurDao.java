@@ -71,4 +71,13 @@ public class UtilisateurDao {
             em.close();
         }
     }
+
+    public Utilisateur findById(Long id) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            return em.find(Utilisateur.class, id);
+        } finally {
+            em.close();
+        }
+    }
 }

@@ -1,14 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.gestionhotel.model.Utilisateur" %>
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <title>Mon profil - Hôtel Évasion</title>
-    <link href="<%= request.getContextPath() %>/assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<main class="container py-5">
+<%@ include file="/WEB-INF/layout/client_header.jspf" %>
+    <div class="py-4">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-sm">
@@ -57,6 +50,5 @@
             </div>
         </div>
     </div>
-</main>
-</body>
-</html>
+    </div>
+<%@ include file="/WEB-INF/layout/client_footer.jspf" %>

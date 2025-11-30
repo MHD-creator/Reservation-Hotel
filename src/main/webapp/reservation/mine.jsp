@@ -2,29 +2,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="com.gestionhotel.model.Reservation" %>
-<%@ page import="com.gestionhotel.model.Utilisateur" %>
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <title>Mes réservations - Hôtel Évasion</title>
-    <link href="<%= request.getContextPath() %>/assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="<%= request.getContextPath() %>/">Hôtel Évasion</a>
-        <div class="d-flex ms-auto">
-            <a class="btn btn-outline-secondary btn-sm me-2" href="<%= request.getContextPath() %>/rooms/search">Rechercher une chambre</a>
-        </div>
-    </div>
-</nav>
-
-<main class="container py-3">
+<%@ include file="/WEB-INF/layout/client_header.jspf" %>
     <h1 class="h4 mb-4">Mes réservations</h1>
 
     <%
-        Utilisateur user = (Utilisateur) session.getAttribute("user");
         if (user != null) {
     %>
     <p class="text-muted">Connecté en tant que <strong><%= user.getNom() != null ? user.getNom() : user.getEmail() %></strong></p>
@@ -203,5 +184,4 @@
         }
     %>
 </main>
-</body>
-</html>
+<%@ include file="/WEB-INF/layout/client_footer.jspf" %>

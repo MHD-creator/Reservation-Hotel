@@ -1,23 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <title>Tableau de bord - Restaurant</title>
-    <link href="<%= request.getContextPath() %>/assets/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: linear-gradient(135deg,#f8fafc 0%, #eef2f7 100%); }
-        .card-nav { border-radius: 14px; box-shadow: 0 10px 30px rgba(15,23,42,0.08); }
-    </style>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">Hôtel Évasion - Admin</a>
-    </div>
-</nav>
-
-<main class="container py-4">
+<%@ include file="/WEB-INF/layout/admin_header.jspf" %>
     <div class="mb-4">
         <h1 class="h3 mb-1">Tableau de bord restaurant</h1>
         <p class="text-muted mb-0">Gérez vos chambres, vos réservations et vos clients.</p>
@@ -52,7 +34,4 @@
             </div>
         </div>
     </div>
-</main>
-
-</body>
-</html>
+<%@ include file="/WEB-INF/layout/admin_footer.jspf" %>

@@ -1,27 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.gestionhotel.model.Reservation" %>
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - Réservations</title>
-    <link href="<%= request.getContextPath() %>/assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="<%= request.getContextPath() %>/admin/dashboard">Hôtel Évasion - Admin</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="<%= request.getContextPath() %>/admin/chambres">Chambres</a></li>
-                <li class="nav-item"><a class="nav-link active" href="<%= request.getContextPath() %>/admin/reservations">Réservations</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<main class="container">
+<%@ include file="/WEB-INF/layout/admin_header.jspf" %>
     <h1 class="h4 mb-4">Toutes les réservations</h1>
 
     <%
@@ -100,6 +80,4 @@
     <%
         }
     %>
-</main>
-</body>
-</html>
+<%@ include file="/WEB-INF/layout/admin_footer.jspf" %>

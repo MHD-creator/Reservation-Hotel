@@ -1,18 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <title>Gestion des chambres</title>
-    <link href="<%= request.getContextPath() %>/assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="<%= request.getContextPath() %>/admin/dashboard">Hôtel Évasion - Admin</a>
-    </div>
-</nav>
-<main class="container py-3">
+<%@ include file="/WEB-INF/layout/admin_header.jspf" %>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h1 class="h4 mb-1">Chambres</h1>
@@ -80,6 +67,4 @@
             </table>
         </div>
     </div>
-</main>
-</body>
-</html>
+<%@ include file="/WEB-INF/layout/admin_footer.jspf" %>
