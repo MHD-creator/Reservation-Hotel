@@ -109,21 +109,26 @@ Mot de passe : Hotel@2025
 ### Commandes pour créer la base et les tables
 
 - 1) Créer la base de données
+```sql
 CREATE DATABASE IF NOT EXISTS gestion_hotel
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
 USE gestion_hotel;
+```
 
 - 2) Créer un utilisateur MySQL dédié
+```sql
 CREATE USER IF NOT EXISTS 'hotel_user'@'localhost'
   IDENTIFIED BY 'Hotel@2025';
 GRANT ALL PRIVILEGES ON gestion_hotel.* TO 'hotel_user'@'localhost';
 FLUSH PRIVILEGES;
+```
 
 - NB : Si vous changez l'utilisateur ou le mot de passe, mettez à jour la configuration dans `src/main/resources/META-INF/persistence.xml`.
 
 - 3) Table utilisateur
+```sql
 DROP TABLE IF EXISTS utilisateur;
 CREATE TABLE utilisateur (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -133,8 +138,10 @@ CREATE TABLE utilisateur (
     mot_de_passe  VARCHAR(255)      NOT NULL,
     role          VARCHAR(20)       NOT NULL  -- 'ADMIN' ou 'CLIENT'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
 - 4) Table chambre
+```sql
 DROP TABLE IF EXISTS chambre;
 CREATE TABLE chambre (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -147,8 +154,10 @@ CREATE TABLE chambre (
     photo_path    VARCHAR(255),              -- chemin/nom du fichier uploadé
     CONSTRAINT uk_chambre_numero UNIQUE (numero)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
 - 5) Table reservation
+```sql
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -167,6 +176,7 @@ CREATE TABLE reservation (
         FOREIGN KEY (id_chambre) REFERENCES chambre(id)
         ON DELETE RESTRICT ON UPDATE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
 - 6) Insérer un admin par défaut (mot de passe **haché** avec SHA-256)
 
