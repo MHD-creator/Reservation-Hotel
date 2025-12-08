@@ -1,6 +1,6 @@
 # Système de Réservation d'Hôtel
 
-Une application web complète de gestion hôtelière développée avec Java EE, JSP, et Hibernate, permettant aux clients de réserver des chambres et aux administrateurs de gérer l'établissement.
+Une application web complète de gestion hôtelière développée avec Java EE, JSP, et Hibernate, permettant aux clients de réserver des chambres et aux administrateurs de gérer l'établissement.Cette application est destiné au restaurant qui veulent une plateforme de reservation en ligne pour leur client.
 
 ## Description
 
@@ -32,6 +32,16 @@ Le projet est un système de réservation d'hôtel qui offre deux interfaces dis
 │         Base de données (MySQL)     │
 └─────────────────────────────────────┘
 ```
+## Ecrans(images)
+- **Ecran client** : 
+<img width="960" height="442" alt="Capture d&#39;écran 2025-12-08 002013" src="https://github.com/user-attachments/assets/e0a26551-430b-4803-8a8f-091c5811ebe7" />
+<img width="960" height="436" alt="Capture d&#39;écran 2025-12-08 002333" src="https://github.com/user-attachments/assets/41264ced-742c-4245-bb7c-577d687de19a" />
+<img width="960" height="439" alt="Capture d&#39;écran 2025-12-08 000037" src="https://github.com/user-attachments/assets/3d1399ef-2283-4949-a641-f2775d03104f" />
+<img width="960" height="448" alt="Capture d&#39;écran 2025-12-07 235727" src="https://github.com/user-attachments/assets/bc11ac01-cfb8-404d-a854-38b15bb29da0" />
+- **Ecran Admin**
+<img width="959" height="446" alt="Capture d&#39;écran 2025-12-08 000451" src="https://github.com/user-attachments/assets/6ca9021c-590b-44d8-bae1-35d7997f4dbb" />
+<img width="959" height="443" alt="Capture d&#39;écran 2025-12-08 000302" src="https://github.com/user-attachments/assets/335ed13c-3d1b-47a4-8b9f-081472de5a25" />
+<img width="960" height="447" alt="Capture d&#39;écran 2025-12-08 000333" src="https://github.com/user-attachments/assets/618b35f4-2a64-49f6-88e0-d1c332511e3e" />
 
 ## Structure du Projet
 
