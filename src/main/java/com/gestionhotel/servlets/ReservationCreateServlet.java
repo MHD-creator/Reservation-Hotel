@@ -6,6 +6,7 @@ import com.gestionhotel.dao.UtilisateurDao;
 import com.gestionhotel.model.Chambre;
 import com.gestionhotel.model.Reservation;
 import com.gestionhotel.model.Utilisateur;
+import com.gestionhotel.util.PasswordUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -145,7 +146,7 @@ public class ReservationCreateServlet extends HttpServlet {
             client.setNom(nom);
             client.setEmail(email);
             client.setTelephone(telephone);
-            client.setMotDePasse(motDePasse);
+            client.setMotDePasse(PasswordUtil.hashPassword(motDePasse));
             client.setRole("CLIENT");
             utilisateurDao.saveOrUpdate(client);
         }

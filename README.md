@@ -106,8 +106,9 @@ Base : gestion_hotel
 Utilisateur : hotel_user 
 Mot de passe : Hotel@2025
 ```
-### Commandes pour creer les tables dans la base donnée
-- 1 Créer la base de données
+### Commandes pour créer la base et les tables
+
+- 1) Créer la base de données
 CREATE DATABASE IF NOT EXISTS gestion_hotel
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -119,7 +120,9 @@ CREATE USER IF NOT EXISTS 'hotel_user'@'localhost'
   IDENTIFIED BY 'Hotel@2025';
 GRANT ALL PRIVILEGES ON gestion_hotel.* TO 'hotel_user'@'localhost';
 FLUSH PRIVILEGES;
- - NB : Dans le cas ou vou decederez de changer le user et le mdp, vous pouvez recorriger la configuration dans le fichier persistence.xml
+
+- NB : Si vous changez l'utilisateur ou le mot de passe, mettez à jour la configuration dans `src/main/resources/META-INF/persistence.xml`.
+
 - 3) Table utilisateur
 DROP TABLE IF EXISTS utilisateur;
 CREATE TABLE utilisateur (
@@ -163,11 +166,20 @@ CREATE TABLE reservation (
     CONSTRAINT fk_reservation_chambre
         FOREIGN KEY (id_chambre) REFERENCES chambre(id)
         ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-- 6) Insérer un admin par défaut
+- 6) Insérer un admin par défaut (mot de passe **haché** avec SHA-256)
+
+```sql
 INSERT INTO utilisateur (nom, email, telephone, mot_de_passe, role)
-VALUES ('Admin Hôtel', 'admin@hotel.com', '00000000', 'admin', 'ADMIN');
+VALUES (
+  'Admin Hôtel',
+  'admin@hotel.com',
+  '00000000',
+  SHA2('Admin@2025', 256), -- mot de passe en clair : Admin@2025
+  'ADMIN'
+);
+```
 ### Configuration Hibernate
 - **Dialecte** : MySQLDialect
 - **Mode de création** : `none` (schéma existant)
@@ -180,7 +192,7 @@ VALUES ('Admin Hôtel', 'admin@hotel.com', '00000000', 'admin', 'ADMIN');
 - MySQL Connector 8.0.33
 - JUnit 3.8.1 (tests)
 
-## Déploiement
+## Déploiement / Exécution du projet
 
 ### Prérequis
 1. **Java** : JDK 17 ou supérieur
@@ -188,28 +200,76 @@ VALUES ('Admin Hôtel', 'admin@hotel.com', '00000000', 'admin', 'ADMIN');
 3. **MySQL** : 8.0+
 4. **Serveur** : Tomcat 10+ (compatible Jakarta EE)
 
-### Étapes de déploiement
+### Étapes détaillées
 
-1. **Configuration de la base de données**
+1. **Créer la base de données et les tables**
+
+   Dans MySQL (client, phpMyAdmin, etc.) :
+
    ```sql
-   CREATE DATABASE gestion_hotel;
-   -- Exécuter le script SQL fourni pour créer les tables
+   -- 1) Créer la base et l'utilisateur
+   CREATE DATABASE IF NOT EXISTS gestion_hotel
+     CHARACTER SET utf8mb4
+     COLLATE utf8mb4_unicode_ci;
+
+   CREATE USER IF NOT EXISTS 'hotel_user'@'localhost'
+     IDENTIFIED BY 'Hotel@2025';
+   GRANT ALL PRIVILEGES ON gestion_hotel.* TO 'hotel_user'@'localhost';
+   FLUSH PRIVILEGES;
+
+   USE gestion_hotel;
+
+   -- 2) Créer les tables (utilisateur, chambre, reservation)
+   -- Voir les commandes détaillées plus haut dans cette section.
    ```
 
-2. **Compilation et packaging**
+2. **(Optionnel, si vous aviez déjà des utilisateurs en clair)** : migrer les mots de passe existants en SHA-256
+
+   Si votre base contient déjà des utilisateurs dont le mot de passe était stocké en clair, exécutez **une seule fois** :
+
+   ```sql
+   USE gestion_hotel;
+
+   UPDATE utilisateur
+   SET mot_de_passe = SHA2(mot_de_passe, 256);
+   ```
+
+3. **Créer un compte administrateur par défaut**
+
+   Si aucun admin n'existe encore, vous pouvez créer un administrateur avec un mot de passe haché SHA-256 :
+
+   ```sql
+   USE gestion_hotel;
+
+   INSERT INTO utilisateur (nom, email, telephone, mot_de_passe, role)
+   VALUES (
+     'Admin Hôtel',
+     'admin@hotel.com',
+     '00000000',
+     SHA2('Admin@2025', 256), -- mot de passe en clair : Admin@2025
+     'ADMIN'
+   );
+   ```
+
+4. **Compilation et packaging Maven**
+
+   Dans le dossier du projet :
+
    ```bash
    mvn clean package
    ```
 
-3. **Déploiement**
+5. **Déploiement sur Tomcat**
+
+   Copier le fichier WAR généré vers le dossier `webapps` de Tomcat :
+
    ```bash
-   # Copier le WAR vers le répertoire webapps de Tomcat
    cp target/reservation_hotel.war $TOMCAT_HOME/webapps/
    ```
 
-4. **Démarrage**
+6. **Démarrer Tomcat**
+
    ```bash
-   # Démarrer Tomcat
    $TOMCAT_HOME/bin/startup.sh
    ```
 
@@ -218,15 +278,15 @@ VALUES ('Admin Hôtel', 'admin@hotel.com', '00000000', 'admin', 'ADMIN');
 - **Interface admin** : `http://localhost:8080/reservation_hotel/admin/dashboard`
 
 ### Comptes par défaut
-- **Administrateur** : `admin@hotel.com` / `admin123`
-- **Clients** : Créés automatiquement lors des réservations
+- **Administrateur** : `admin@hotel.com` / `Admin@2025` (créé via le script SQL ci-dessus)
+- **Clients** : Créés automatiquement lors des réservations (mot de passe haché en SHA-256 côté serveur)
 
 ## Sécurité
 
 ### Authentification
-- Gestion de session avec attributs `user` et `isClient`
-- Contrôle d'accès aux pages administratives
-- Hachage des mots de passe (à implémenter)
+- Gestion de session avec attribut `user` en session
+- Contrôle d'accès aux pages administratives (rôle `ADMIN` requis)
+- Hachage des mots de passe côté serveur avec SHA-256 (`PasswordUtil`)
 
 ### Validation
 - Validation côté serveur des formulaires

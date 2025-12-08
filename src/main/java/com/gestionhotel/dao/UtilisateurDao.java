@@ -1,6 +1,7 @@
 package com.gestionhotel.dao;
 
 import com.gestionhotel.model.Utilisateur;
+import com.gestionhotel.util.PasswordUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -12,12 +13,13 @@ public class UtilisateurDao {
     public Utilisateur findByEmailAndPassword(String email, String motDePasse) {
         EntityManager em = JpaUtil.getEntityManager();
         try {
+            String hashed = PasswordUtil.hashPassword(motDePasse);
             TypedQuery<Utilisateur> query = em.createQuery(
                     "SELECT u FROM Utilisateur u WHERE u.email = :email AND u.motDePasse = :mdp",
                     Utilisateur.class
             );
             query.setParameter("email", email);
-            query.setParameter("mdp", motDePasse);
+            query.setParameter("mdp", hashed);
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
